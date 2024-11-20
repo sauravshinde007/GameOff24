@@ -21,6 +21,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        //stop player movement if dialogue is playing
+        if (DialogueManager.GetInstance().dialogueIsPlaying)
+        {
+            return;
+        }
         // Horizontal movement
         float moveInput = Input.GetAxisRaw("Horizontal");
         rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
