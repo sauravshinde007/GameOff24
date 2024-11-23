@@ -4,10 +4,11 @@ using UnityEngine;
 using TMPro;
 using Ink.Runtime;
 using UnityEngine.EventSystems;
+using Ink.UnityIntegration;
 
 public class DialogueManager : MonoBehaviour
 {
-    [Header("Dilaogue UI")]
+    [Header("Dialogue UI")]
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TextMeshProUGUI dialogueText;
 
@@ -15,12 +16,15 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject[] choices;
     private TextMeshProUGUI[] choicesText;
 
-    private Story currentStory;
+    [Header("Globals Ink File")]
+    [SerializeField] private InkFile globalInkFile;
 
-    //dialogue is playing can only be read not changed
+    private Story currentStory;
+    private DialogueVariables dialogueVariables;
+
     public bool dialogueIsPlaying { get; private set; }
 
-    #region "Singleton"
+    #region Singleton
     private static DialogueManager instance;
 
     private void Awake()
@@ -28,14 +32,17 @@ public class DialogueManager : MonoBehaviour
         if (instance != null)
         {
             Debug.LogWarning("More than one instance of DialogueManager found!");
+            return;
         }
+
         instance = this;
+        dialogueVariables = new DialogueVariables(globalInkFile.filePath);
     }
+
     public static DialogueManager GetInstance()
     {
         return instance;
     }
-
     #endregion
 
     private void Start()
@@ -44,34 +51,29 @@ public class DialogueManager : MonoBehaviour
         dialoguePanel.SetActive(false);
 
         choicesText = new TextMeshProUGUI[choices.Length];
-        int index = 0;
-        foreach (GameObject choice in choices)
+        for (int i = 0; i < choices.Length; i++)
         {
-            choicesText[index] = choice.GetComponentInChildren<TextMeshProUGUI>();
-            index++;
+            choicesText[i] = choices[i].GetComponentInChildren<TextMeshProUGUI>();
         }
     }
 
     private void Update()
     {
-        //return if dialogue is not playing
-        if (!dialogueIsPlaying)
-        {
-            return;
-        }
+        if (!dialogueIsPlaying) return;
 
-        //handle continue to next line in dialogue when interact is pressed
         if (Input.GetButtonUp("Continue"))
         {
             ContinueStory();
         }
     }
 
-    public void EntryDialogueMode(TextAsset inkJSON)
+    public void EnterDialogueMode(TextAsset inkJSON)
     {
         currentStory = new Story(inkJSON.text);
         dialoguePanel.SetActive(true);
         dialogueIsPlaying = true;
+
+        dialogueVariables.StartListening(currentStory);
 
         ContinueStory();
     }
@@ -80,9 +82,15 @@ public class DialogueManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
 
+        dialogueVariables.StopListening(currentStory);
+
         dialogueText.text = "";
         dialoguePanel.SetActive(false);
         dialogueIsPlaying = false;
+
+        // Update the total points in the GameManager
+        int totalPoints = ((Ink.Runtime.IntValue)dialogueVariables.variables["total_points"]).value;
+        GameManager.instance.UpdateTotalPoints(totalPoints);
     }
 
     //typing Effect
@@ -104,8 +112,7 @@ public class DialogueManager : MonoBehaviour
 
             //set text for current dialogue 
             StartCoroutine(TypeSentence(currentStory.Continue()));
-            
-            //display choices if there are any
+
             DisplayChoices();
         }
         else
@@ -117,25 +124,25 @@ public class DialogueManager : MonoBehaviour
     private void DisplayChoices()
     {
         List<Choice> currentChoices = currentStory.currentChoices;
-        //defensive check to make sure there are no more choices than UI elements
+
         if (currentChoices.Count > choices.Length)
         {
-            Debug.LogWarning("There are more choices than UI elements");
+            Debug.LogError("More choices than UI elements!");
         }
 
-        int index = 0;
-        //enable and initialize the choices UI elements
-        foreach (Choice choice in currentChoices)
+        for (int i = 0; i < choices.Length; i++)
         {
-            choices[index].gameObject.SetActive(true);
-            choicesText[index].text = choice.text;
-            index++;
+            if (i < currentChoices.Count)
+            {
+                choices[i].gameObject.SetActive(true);
+                choicesText[i].text = currentChoices[i].text;
+            }
+            else
+            {
+                choices[i].gameObject.SetActive(false);
+            }
         }
-        //go through the remaining UI elements and disable them
-        for (int i = index; i < choices.Length; i++)
-        {
-            choices[i].gameObject.SetActive(false);
-        }
+
         StartCoroutine(SelectFirstChoice());
     }
 
@@ -146,11 +153,8 @@ public class DialogueManager : MonoBehaviour
 
     private IEnumerator SelectFirstChoice()
     {
-        //event system requires we clear it first, then wait
-        //for atleast one frame before setting the selected gameobject
         EventSystem.current.SetSelectedGameObject(null);
         yield return new WaitForEndOfFrame();
-        EventSystem.current.SetSelectedGameObject(choices[0].gameObject);
+        EventSystem.current.SetSelectedGameObject(choices[0]);
     }
 }
-

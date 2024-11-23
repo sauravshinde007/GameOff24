@@ -10,6 +10,9 @@ public class DialogueTrigger : MonoBehaviour
     [Header("Ink JSON")]
     [SerializeField] private TextAsset inkJSON;
 
+    [Header("NPC Name")]
+    [SerializeField] private string npcName;
+
     private bool playerInRange ;
 
     private void Awake()
@@ -26,7 +29,7 @@ public class DialogueTrigger : MonoBehaviour
             if (Input.GetButtonUp("Interact"))
             {
                 //Debug.Log(inkJSON.text);
-                DialogueManager.GetInstance().EntryDialogueMode(inkJSON);
+                DialogueManager.GetInstance().EnterDialogueMode(inkJSON);
             }
         }
         else
