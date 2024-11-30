@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class Item
 {
     public enum ItemType
@@ -11,15 +13,27 @@ public class Item
     }
 
     public ItemType itemType;
-    public int amount;
+
+    [SerializeField] private Sprite popupSprite;
 
     public Sprite GetSprite()
     {
         switch(itemType)
         {
-            default:
+
             case ItemType.Photo: return ItemAssets.Instance.photographSprite;
             case ItemType.Letter: return ItemAssets.Instance.LetterSprite;
+            default: return null;
         }
+    }
+
+    public Sprite GetPopupSprite()
+    {
+        return popupSprite;
+    }
+
+    public void SetPopupSprite(Sprite sprite)
+    {
+        popupSprite = sprite;
     }
 }

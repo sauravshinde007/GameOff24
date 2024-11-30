@@ -14,6 +14,7 @@ public class ItemWorld : MonoBehaviour
     }
 
     private Item item;
+    private Sprite popupSprite;
     private SpriteRenderer spriteRenderer;
 
     private void Awake()
@@ -32,8 +33,22 @@ public class ItemWorld : MonoBehaviour
         return item;
     }
 
+    //// Assign the popup sprite to this item
+    //public void SetPopupSprite(Sprite sprite)
+    //{
+    //    this.popupSprite = sprite;
+    //}
+
+    //public Sprite GetPopupSprite()
+    //{
+    //    Debug.Log("Popup sprite: " + popupSprite);
+    //    return popupSprite;
+    //}
+
     public void DestroySelf()
     {
         Destroy(gameObject);
     }
+
+
 }

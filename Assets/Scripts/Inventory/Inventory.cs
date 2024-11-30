@@ -14,20 +14,21 @@ public class Inventory
     {
         items = new List<Item>();
 
-        //Just for demo
-        AddItem(new Item { itemType = Item.ItemType.Photo, amount = 1 });
-        AddItem(new Item { itemType = Item.ItemType.Letter, amount = 1 });
-        AddItem(new Item { itemType = Item.ItemType.Letter, amount = 1 });
-
         //Printing Count of items
         Debug.Log(items.Count);
     }
 
     public void AddItem(Item item)
     {
+        if(item == null)
+        {
+            Debug.LogError("Item is null. Can't add it to the inventory.");
+            return;
+        }
         items.Add(item);
         OnItemListChanged?.Invoke(this, EventArgs.Empty);
     }
+
 
     public List<Item> GetItemList() { 
         return items;

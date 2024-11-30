@@ -17,7 +17,11 @@ public class PlayerMovement : MonoBehaviour
     //private Clue clueInRange;
 
     private Rigidbody2D rb;
+    private Animator anim;
+    private SpriteRenderer sr;
+
     private bool isGrounded;
+    private float moveInput;
 
     //Plyer Inventory
     private Inventory inventory;
@@ -26,12 +30,12 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
+        sr = GetComponent<SpriteRenderer>();
 
         inventory = new Inventory();
         uiInventory.SetInventory(inventory);
 
-
-        ItemWorld.SpawnItemWorld(new Vector3(5, -1.55f), new Item { itemType = Item.ItemType.Photo, amount = 1 });
     }
 
     private void Update()
@@ -42,7 +46,7 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
         // Horizontal movement
-        float moveInput = Input.GetAxisRaw("Horizontal");
+        moveInput = Input.GetAxisRaw("Horizontal");
         rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
 
         //Pickup the item
@@ -53,6 +57,8 @@ public class PlayerMovement : MonoBehaviour
             itemInRange.DestroySelf();
             itemInRange = null; // Reset the reference
         }
+
+        PlayerAnimations();
 
     }
 
@@ -70,6 +76,23 @@ public class PlayerMovement : MonoBehaviour
             itemInRange = itemWorld; // Save reference to the item
         }
 
+    }
+
+    private void PlayerAnimations()
+    {
+        if(moveInput > 0)
+        {
+            anim.SetBool("Walk", true);
+            sr.flipX = false;
+        }else if (moveInput < 0)
+        {
+            anim.SetBool("Walk", true);
+            sr.flipX = true;
+        }
+        else
+        {
+            anim.SetBool("Walk", false);
+        }
     }
 
 
