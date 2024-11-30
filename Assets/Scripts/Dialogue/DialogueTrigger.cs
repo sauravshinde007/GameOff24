@@ -10,8 +10,8 @@ public class DialogueTrigger : MonoBehaviour
     [Header("Ink JSON")]
     [SerializeField] private TextAsset inkJSON;
 
-    [Header("NPC Name")]
-    [SerializeField] private string npcName;
+    //[Header("NPC Name")]
+    //[SerializeField] private string npcName;
 
     private bool playerInRange ;
 

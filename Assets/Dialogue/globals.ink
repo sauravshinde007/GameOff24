@@ -2,6 +2,9 @@
 VAR total_points = 0
 
 //tracking talked NPCs
-VAR isTalked_NPC1 = false
-VAR isTalked_NPC2 = false
-VAR isTalked_NPC3 = false
+VAR isTalked_jack = false
+VAR isTalked_sophia = false
+VAR isTalked_liam = false
+VAR isTalked_mia = false
+VAR isTalked_ryan = false
+VAR isTalked_emma = false
