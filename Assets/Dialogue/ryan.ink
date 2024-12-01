@@ -1,32 +1,37 @@
 INCLUDE globals.ink
 
-{isTalked_ryan == false : -> main_ryan | -> already_chose_ryan}
+{isTalked_ryan == false : -> main | -> already_chose}
 
-=== main_ryan ===  
-You meet Ryan, a bouncer guarding the nightclub VIP entrance.  
-
-+ [“Because she’s in danger, Ryan. Help me.”]  
+=== main ===
+You meet Ryan in the nightclub VIP lounge.  
+Ryan: "Elysia left this photo with me. Said it might help someone trustworthy."  
++ [Ask Ryan why Elysia trusted him]  
     ~ isTalked_ryan = true  
-    ~ total_points += 2  
-    -> persuaded_ryan  
-
-+ [“Just give me something useful, Ryan.”]  
+    ~ total_points += 5  
+    -> ryan_trusted  
++ [Ask to see the photo]  
     ~ isTalked_ryan = true  
-    ~ total_points -= 1  
-    -> intimidated_ryan  
+    ~ total_points += 3  
+    -> ryan_photo  
++ [Say you don’t need his help and leave]  
+    ~ isTalked_ryan = true  
+    ~ total_points += 0  
+    -> ignored_ryan  
 
-=== persuaded_ryan ===  
-Ryan: "Alright. She left this photo with a friend. Here, take it."  
-+1 Clue (Photo) earned!  
-
-Photo Description: *A group photo of Elysia, Emma, and a stranger in front of Elysia’s apartment.*  
+=== ryan_trusted ===
+Ryan: "She said I wasn’t connected to NeuroDyne, but I don’t know why. Here’s the photo."  
+Clue Location: Nightclub VIP Lounge Photo  
 -> END  
 
-=== intimidated_ryan ===  
-Ryan: "Fuck you."  
-
+=== ryan_photo ===
+Ryan: "Here’s the photo she left. I don’t know if it’ll help you, though."  
+Clue Location: Nightclub VIP Lounge Photo  
 -> END  
 
-=== already_chose_ryan ===  
-Ryan: "I told you, I’ve got nothing else."  
+=== ignored_ryan ===
+Ryan: "Fine. Good luck."  
+-> END  
+
+=== already_chose ===
+Ryan: "I already gave you the photo!"  
 -> END  

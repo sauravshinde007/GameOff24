@@ -1,32 +1,37 @@
 INCLUDE globals.ink
 
-{isTalked_emma == false : -> main_emma | -> already_chose_emma}
+{isTalked_emma == false : -> main | -> already_chose}
 
-=== main_emma ===  
-You find Emma, Elysia’s protective neighbor, outside the apartment.  
-
-+ [“I’m trying to find Elysia. She’s in danger.”]  
+=== main ===
+You meet Emma outside Elysia’s apartment.  
+Emma: "She’s gone, but she left something behind for whoever finds her."  
++ [Ask Emma about Elysia’s disappearance]  
     ~ isTalked_emma = true  
-    ~ total_points += 2  
-    -> trusted_emma  
-
-+ [“That’s none of your business. Just tell me where she is.”]  
+    ~ total_points += 3  
+    -> emma_clue  
++ [Ask Emma if she knows where Elysia went]  
     ~ isTalked_emma = true  
-    ~ total_points -= 1  
-    -> dismissed_emma  
+    ~ total_points += 5  
+    -> emma_hint  
++ [Say you’ll check the apartment yourself]  
+    ~ isTalked_emma = true  
+    ~ total_points += 0  
+    -> ignored_emma  
 
-=== trusted_emma ===  
-Emma: "She used to live here. There’s a letter taped under her mailbox. Take it, but be careful."  
-+1 Clue (Letter) earned!  
-
-Letter Description: *A final note from Elysia: “If you’ve found this, I’m either gone or waiting in my apartment.”*  
+=== emma_clue ===
+Emma: "She said her computer has all the answers. Check under the mailbox for a note."  
+Clue Location: Mailbox Letter  
 -> END  
 
-=== dismissed_emma ===  
-Emma: "There’s a letter under her mailbox. Take it and leave me alone."  
-+1 Clue (Letter) earned!  
+=== emma_hint ===
+Emma: "She didn’t tell me much, just that her computer holds the truth. Look under the mailbox for her note."  
+Clue Location: Mailbox Letter  
 -> END  
 
-=== already_chose_emma ===  
-Emma: "I’ve already told you where to look."  
+=== ignored_emma ===
+Emma: "Go ahead, but don’t say I didn’t warn you."  
 -> END  
+
+=== already_chose ===
+Emma: "I gave you the clue already!"  
+-> END 

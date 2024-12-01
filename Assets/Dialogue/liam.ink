@@ -1,31 +1,37 @@
 INCLUDE globals.ink
 
-{isTalked_liam == false : -> main_liam | -> already_chose_liam}
+{isTalked_liam == false : -> main | -> already_chose}
 
-=== main_liam ===  
-Alex find Liam, a cynical ex-cop leaning against a wall near the café.  
-
-+ [“I’m not backing down. Tell me what you know about Elysia.”]  
+=== main ===
+You meet Liam in the alley outside the nightclub.  
+Liam: "Elysia? Yeah, I know where she lived. But why are you looking for her?"  
++ [Tell Liam you’re worried about Elysia’s safety]  
     ~ isTalked_liam = true  
-    ~ total_points += 2  
-    -> pleaded_liam  
-
-+ [“You don’t have a choice, Liam. Start talking.”]  
+    ~ total_points += 5  
+    -> liam_help  
++ [Say you need answers from Elysia]  
     ~ isTalked_liam = true  
-    ~ total_points -= 1  
-    -> threatened_liam  
+    ~ total_points += 3  
+    -> liam_curious  
++ [Refuse to answer Liam and move on]  
+    ~ isTalked_liam = true  
+    ~ total_points += 0  
+    -> ignored_liam  
 
-=== pleaded_liam ===  
-Liam: "Fine. I saw her running from some shady-looking guys. She dropped this photo in the alley near the nightclub."  
-+1 Clue (Photo) earned!  
-
-Photo Description: *A blurry photo of Elysia running, with a shadowy figure chasing her.*  
+=== liam_help ===
+Liam: "I don’t know if she’s safe, but here’s where she lived. If you’re going, be careful."  
+Elysia’s Apartment Unlocked  
 -> END  
 
-=== threatened_liam ===  
-Liam: "She dropped a photo in the nightclub alley. Just Leave me alone."  
+=== liam_curious ===
+Liam: "If you’re just looking for answers, you can try her apartment. But be careful; it’s not safe."  
+Elysia’s Apartment Unlocked  
 -> END  
 
-=== already_chose_liam ===  
-Liam: "I’ve got nothing else for you."  
+=== ignored_liam ===
+Liam: "If you don’t trust me, figure it out yourself."  
 -> END  
+
+=== already_chose ===
+Liam: "I already told you about her apartment. What else do you need?"  
+-> END   

@@ -1,32 +1,37 @@
 INCLUDE globals.ink
 
-{isTalked_jack == false : -> main_jack | -> already_chose_jack}
+{isTalked_jack == false : -> main | -> already_chose}
 
-=== main_jack ===  
-Alex meet Jack, a nervous mechanic tinkering with a drone.  
-
-+ [“Relax, Jack. Just tell me what you know about Elysia.”]  
+=== main ===
+You meet Jack at the café entrance.  
+Jack: "Hey, you’re looking for Elysia, right? She was around here not long ago."  
++ [Press Jack for more details]  
     ~ isTalked_jack = true  
-    ~ total_points += 2  
-    -> reassured_jack  
-
-+ [“Stop wasting my time, Jack. Talk!”]  
+    ~ total_points += 3  
+    -> jack_details  
++ [Ask if Jack knows why she left]  
     ~ isTalked_jack = true  
-    ~ total_points -= 1  
-    -> pressured_jack  
+    ~ total_points += 5  
+    -> jack_reasons  
++ [Say you’re just looking for someone and leave]  
+    ~ isTalked_jack = true  
+    ~ total_points += 0  
+    -> ignored_jack  
 
-=== reassured_jack ===  
-Jack: "Alright, alright. She used to hang out at the café nearby. She dropped this photo once. Maybe it’ll help."  
-+1 Clue (Photo) earned!  
-
-Photo Description: *A torn photo of Elysia sitting at the café with someone in a hoodie.*  
+=== jack_details ===
+Jack: "She seemed on edge. I saw her drop this photo. Maybe it’ll help you figure things out."  
+Clue Location: Café Booth Photo  
 -> END  
 
-=== pressured_jack ===  
-Jack: "Fine. The café. That’s all I know. Here’s a photo she dropped once. Now leave me alone."  
-+1 Clue (Photo) earned!  
+=== jack_reasons ===
+Jack: "I don’t know why she left, but she always said she was worried about someone following her. She left this photo behind, though."  
+Clue Location: Café Booth Photo  
 -> END  
 
-=== already_chose_jack ===  
-Jack: "I already told you everything I know!"  
--> END
+=== ignored_jack ===
+Jack: "Suit yourself. Hope you find her."  
+-> END  
+
+=== already_chose ===
+Jack: "I told you everything I know. Check the photo if you haven’t already."  
+-> END  

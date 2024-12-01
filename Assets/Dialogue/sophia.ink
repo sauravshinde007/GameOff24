@@ -1,32 +1,37 @@
 INCLUDE globals.ink
 
-{isTalked_sophia == false : -> main_sophia | -> already_chose_sophia}
+{isTalked_sophia == false : -> main | -> already_chose}
 
-=== main_sophia ===  
-Alex meet Sophia, a friendly café worker wiping down tables.  
-
-+ [“I think Elysia’s in trouble. Did she leave anything behind?”]  
+=== main ===
+You meet Sophia at the café booth.  
+Sophia: "Elysia used to sit here all the time. She left something the last time I saw her."  
++ [Ask Sophia to show what Elysia left]  
     ~ isTalked_sophia = true  
-    ~ total_points += 2  
-    -> caring_sophia  
-
-+ [“Just tell me if you’ve seen her or not.”]  
+    ~ total_points += 5  
+    -> sophia_letter  
++ [Ask if Sophia noticed anything unusual about Elysia]  
     ~ isTalked_sophia = true  
-    ~ total_points -= 1  
-    -> cold_sophia  
+    ~ total_points += 3  
+    -> sophia_paranoia  
++ [Say you’ll look around yourself]  
+    ~ isTalked_sophia = true  
+    ~ total_points += 0  
+    -> ignored_sophia  
 
-=== caring_sophia ===  
-Sophia: "Oh no! That’s terrible. She left this letter in her booth. I didn’t read it, but maybe it’ll help you."  
-+1 Clue (Letter) earned!  
-
-Letter Description: *A note from Elysia saying, “I’m being watched. They’re everywhere. I need to lay low.”*  
+=== sophia_letter ===
+Sophia: "She left this letter behind. It’s cryptic, but it might mean something to you."  
+Clue Location: Letter at Café Booth  
 -> END  
 
-=== cold_sophia ===  
-Sophia: "There’s a letter in her booth. That’s all I can tell you."  
-+1 Clue (Letter) earned!  
+=== sophia_paranoia ===
+Sophia: "She always seemed like she was hiding from someone. But I don’t know who. Oh, and here’s the letter she left."  
+Clue Location: Letter at Café Booth  
 -> END  
 
-=== already_chose_sophia ===  
-Sophia: "I already gave you the letter, remember?"  
+=== ignored_sophia ===
+Sophia: "Alright. Do whatever you need to."  
+-> END  
+
+=== already_chose ===
+Sophia: "I gave you the letter. What more do you need?"  
 -> END  
