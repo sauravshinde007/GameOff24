@@ -3,7 +3,7 @@ INCLUDE globals.ink
 {isTalked_jack == false : -> main | -> already_chose}
 
 === main ===
-You meet Jack at the café entrance.  
+You meet Jack outside his Apartment.  
 Jack: "Hey, you’re looking for Elysia, right? She was around here not long ago."  
 + [Press Jack for more details]  
     ~ isTalked_jack = true  
@@ -20,12 +20,12 @@ Jack: "Hey, you’re looking for Elysia, right? She was around here not long ago
 
 === jack_details ===
 Jack: "She seemed on edge. I saw her drop this photo. Maybe it’ll help you figure things out."  
-Clue Location: Café Booth Photo  
+Clue Location: Café  
 -> END  
 
 === jack_reasons ===
 Jack: "I don’t know why she left, but she always said she was worried about someone following her. She left this photo behind, though."  
-Clue Location: Café Booth Photo  
+Clue Location: Café   
 -> END  
 
 === ignored_jack ===

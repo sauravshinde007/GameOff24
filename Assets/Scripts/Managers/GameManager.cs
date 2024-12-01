@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -28,10 +29,12 @@ public class GameManager : MonoBehaviour
         if (totalPoints >= 20)
         {
             Debug.Log("Ending 1: Elysia is Rescued");
+            SceneManager.LoadScene("GoodEnding");
         }
         else
         {
             Debug.Log("Ending 2: Elysia is captured by NeuroDyne!");
+            SceneManager.LoadScene("BadEnding");
         }
     }
 }
