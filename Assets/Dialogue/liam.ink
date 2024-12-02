@@ -20,12 +20,12 @@ Liam: "Elysia? Yeah, I know where she lived. But why are you looking for her?"
 
 === liam_help ===
 Liam: "I don’t know if she’s safe, but here’s where she lived. If you’re going, be careful."  
-Elysia’s Apartment Unlocked  
+Elysia’s Apartment Photo  
 -> END  
 
 === liam_curious ===
 Liam: "If you’re just looking for answers, you can try her apartment. But be careful; it’s not safe."  
-Elysia’s Apartment Unlocked  
+Elysia’s Apartment Photo  
 -> END  
 
 === ignored_liam ===

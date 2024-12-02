@@ -3,7 +3,7 @@ INCLUDE globals.ink
 {isTalked_ryan == false : -> main | -> already_chose}
 
 === main ===
-You meet Ryan in the nightclub VIP lounge.  
+You meet Ryan outside the Nightclub.  
 Ryan: "Elysia left this photo with me. Said it might help someone trustworthy."  
 + [Ask Ryan why Elysia trusted him]  
     ~ isTalked_ryan = true  
@@ -20,12 +20,12 @@ Ryan: "Elysia left this photo with me. Said it might help someone trustworthy."
 
 === ryan_trusted ===
 Ryan: "She said I wasn’t connected to NeuroDyne, but I don’t know why. Here’s the photo."  
-Clue Location: Nightclub VIP Lounge Photo  
+Clue Location: Near Ryan
 -> END  
 
 === ryan_photo ===
 Ryan: "Here’s the photo she left. I don’t know if it’ll help you, though."  
-Clue Location: Nightclub VIP Lounge Photo  
+Clue Location: Near Ryan
 -> END  
 
 === ignored_ryan ===

@@ -20,12 +20,12 @@ Jack: "Hey, you’re looking for Elysia, right? She was around here not long ago
 
 === jack_details ===
 Jack: "She seemed on edge. I saw her drop this photo. Maybe it’ll help you figure things out."  
-Clue Location: Café  
+Clue Location: Photo outside Jack's Apartment  
 -> END  
 
 === jack_reasons ===
 Jack: "I don’t know why she left, but she always said she was worried about someone following her. She left this photo behind, though."  
-Clue Location: Café   
+Clue Location: Photo outside Jack's Apartment  
 -> END  
 
 === ignored_jack ===

@@ -37,4 +37,9 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene("BadEnding");
         }
     }
+
+    public void MainMenu()
+    {
+        SceneManager.LoadScene("Menu");
+    }
 }
